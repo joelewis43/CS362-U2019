@@ -39,7 +39,7 @@ int assertCustom(int x, char* msg) {
 int main() {
 
     // Game setup
-    int i, j;
+    int i;
     int seed = 1000;
     int numPlayer = 2;
     int p;
@@ -56,7 +56,6 @@ int main() {
     int currentHandCounts[numPlayer];
     int nextPlayer;
 
-    int nextTributeCards[2];
     int discardCount;
     int totalDifference;
     

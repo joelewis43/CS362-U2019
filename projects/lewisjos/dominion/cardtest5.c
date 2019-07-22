@@ -1,10 +1,3 @@
-/* -----------------------------------------------------------------------
- * Unit Test of the mineEffect function from domine.c
- * 
- * This unit test was developed following the guidelines set in
- * TestUpdateCoins.c
- * -----------------------------------------------------------------------
- */
 
 #include <string.h>
 #include <stdio.h>

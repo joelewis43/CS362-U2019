@@ -230,7 +230,7 @@ int shuffle(int player, struct gameState *state)
     // increment the new position
     newDeckPos++;
 
-    // move the randomly selected card to the back
+    // move the randomly selected card to the back of the deck
     for (i = card; i < state->deckCount[player] - 1; i++)
     {
       state->deck[player][i] = state->deck[player][i + 1];

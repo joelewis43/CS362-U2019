@@ -1,10 +1,4 @@
-/* -----------------------------------------------------------------------
- * Unit Test of the mineEffect function from domine.c
- * 
- * This unit test was developed following the guidelines set in
- * TestUpdateCoins.c
- * -----------------------------------------------------------------------
- */
+
 
 #include <string.h>
 #include <stdio.h>
@@ -50,6 +44,7 @@ int cardCount(struct gameState *G, int p, int card) {
 
 
 // End turn
+
 /*
  * Assertions to make
  * 
@@ -97,17 +92,6 @@ int main() {
     }
 
     
-
-
-
-
-
-
-
-
-
-    
-
 
     if (fails == 0) {
         printf("All tests passed!\n");
