@@ -30,10 +30,78 @@ runtests: testDrawCard
 	cat dominion.c.gcov >> unittestresult.out
 
 
+
+
+baronTest: dominion.o rngs.o unittest1.c
+	gcc -o baronTest unittest1.c -g dominion.o rngs.o $(CFLAGS)
+
+minionTest: dominion.o rngs.o unittest2.c
+	gcc -o minionTest unittest2.c -g dominion.o rngs.o $(CFLAGS)
+
+ambassadorTest: dominion.o rngs.o unittest3.c
+	gcc -o ambassadorTest unittest3.c -g dominion.o rngs.o $(CFLAGS)
+
+tributeTest: dominion.o rngs.o unittest4.c
+	gcc -o tributeTest unittest4.c -g dominion.o rngs.o $(CFLAGS)
+
+mineTest: dominion.o rngs.o unittest5.c
+	gcc -o mineTest unittest5.c -g dominion.o rngs.o $(CFLAGS)
+
+
+
+unittestresults: dominion.o rngs.o baronTest minionTest mineTest ambassadorTest tributeTest
+	./baronTest &> unittestresults.out
+	./minionTest >> unittestresults.out
+	./mineTest >> unittestresults.out
+	./tributeTest >> unittestresults.out
+	./ambassadorTest >> unittestresults.out
+	
+	echo "" >> unittestresults.out
+	echo "" >> unittestresults.out
+	echo "" >> unittestresults.out
+	echo "" >> unittestresults.out
+	echo "Branch Coverage ..." >> unittestresults.out
+	echo "" >> unittestresults.out
+	echo "" >> unittestresults.out
+	gcov dominion.c -b -f >> unittestresults.out
+
+
+
+
+
+
+shuffleTest: dominion.o rngs.o cardtest2.c
+	gcc -o shuffleTest cardtest2.c -g dominion.o rngs.o $(CFLAGS)
+
+endTurnTest: dominion.o rngs.o cardtest3.c
+	gcc -o endTurnTest cardtest3.c -g dominion.o rngs.o $(CFLAGS)
+
+drawCardTest: dominion.o rngs.o cardtest5.c
+	gcc -o drawCardTest cardtest5.c -g dominion.o rngs.o $(CFLAGS)
+
+cardtestresults: dominion.o rngs.o shuffleTest endTurnTest drawCardTest
+	./shuffleTest &> cardtestresults.out
+	./endTurnTest >> cardtestresults.out
+	./drawCardTest >> cardtestresults.out
+
+	echo "" >> cardtestresults.out
+	echo "" >> cardtestresults.out
+	echo "" >> cardtestresults.out
+	echo "" >> cardtestresults.out
+	echo "Branch Coverage ..." >> cardtestresults.out
+	echo "" >> cardtestresults.out
+	echo "" >> cardtestresults.out
+	gcov dominion.c -b -f >> cardtestresults.out
+
+
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 
-all: playdom player 
+all: playdom player
+
+testUpdateCoins:
+	gcc -o testUpdateCoins -g testUpdateCoins.c dominion.o rngs.o $(CFLAGS)
 
 clean:
-	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
+	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe badTestDrawCard testUpdateCoins minionTest *.out *Test
+	clear
