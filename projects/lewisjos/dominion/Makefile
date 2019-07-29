@@ -8,6 +8,7 @@ dominion.o: dominion.h dominion.c rngs.o
 
 playdom: dominion.o playdom.c
 	gcc -o playdom playdom.c -g dominion.o rngs.o $(CFLAGS)
+
 #To run playdom you need to entere: ./playdom <any integer number> like ./playdom 10*/
 testDrawCard: testDrawCard.c dominion.o rngs.o
 	gcc  -o testDrawCard -g  testDrawCard.c dominion.o rngs.o $(CFLAGS)
@@ -31,7 +32,7 @@ runtests: testDrawCard
 
 
 
-
+# Assignment 2 - Unit Tests of Refactored Functions
 baronTest: dominion.o rngs.o unittest1.c
 	gcc -o baronTest unittest1.c -g dominion.o rngs.o $(CFLAGS)
 
@@ -48,7 +49,7 @@ mineTest: dominion.o rngs.o unittest5.c
 	gcc -o mineTest unittest5.c -g dominion.o rngs.o $(CFLAGS)
 
 
-
+# Assignment 2 - Refactored Function Unit Test Controller
 unittestresults: dominion.o rngs.o baronTest minionTest mineTest ambassadorTest tributeTest
 	./baronTest &> unittestresults.out
 	./minionTest >> unittestresults.out
@@ -66,10 +67,7 @@ unittestresults: dominion.o rngs.o baronTest minionTest mineTest ambassadorTest 
 	gcov dominion.c -b -f >> unittestresults.out
 
 
-
-
-
-
+# Assignment 2 - Default Function Unit Tests
 shuffleTest: dominion.o rngs.o cardtest2.c
 	gcc -o shuffleTest cardtest2.c -g dominion.o rngs.o $(CFLAGS)
 
@@ -79,6 +77,7 @@ endTurnTest: dominion.o rngs.o cardtest3.c
 drawCardTest: dominion.o rngs.o cardtest5.c
 	gcc -o drawCardTest cardtest5.c -g dominion.o rngs.o $(CFLAGS)
 
+# Assignment 2 - Default FUnction Unit Test Controller
 cardtestresults: dominion.o rngs.o shuffleTest endTurnTest drawCardTest
 	./shuffleTest &> cardtestresults.out
 	./endTurnTest >> cardtestresults.out
@@ -92,6 +91,28 @@ cardtestresults: dominion.o rngs.o shuffleTest endTurnTest drawCardTest
 	echo "" >> cardtestresults.out
 	echo "" >> cardtestresults.out
 	gcov dominion.c -b -f >> cardtestresults.out
+
+
+# Assignment 4 - Refactored Function Random Tests
+randomBaronTest: dominion.o rngs.o randomtestcard1.c
+	gcc -o randomBaronTest randomtestcard1.c -g dominion.o rngs.o $(CFLAGS)
+
+randomMinionTest: dominion.o rngs.o randomtestcard2.c
+	gcc -o randomMinionTest randomtestcard2.c -g dominion.o rngs.o $(CFLAGS)
+
+randomTributeTest: dominion.o rngs.o randomtestcard3.c
+	gcc -o randomTributeTest randomtestcard3.c -g dominion.o rngs.o $(CFLAGS)
+
+# Assignment 4 - Refactored Function Random Test Controller
+randomtestresults: dominion.o rngs.o randomBaronTest randomMinionTest randomTributeTest
+
+	./randomBaronTest &> barontestresults.out 
+
+	./randomMinionTest &> miniontestresults.out
+
+	./randomTributeTest &> tributetestresults.out
+
+	gcov dominion.c -b -f &> randomtestresults.out
 
 
 player: player.c interface.o

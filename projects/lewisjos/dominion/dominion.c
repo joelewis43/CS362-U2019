@@ -754,6 +754,20 @@ int getCost(int cardNumber)
   return -1;
 }
 
+int specificCardCount(struct gameState *state, int playerID, int card) {
+
+  int count=0, i;
+
+  for (i=0; i<state->handCount[playerID]; i++) {
+    if (state->hand[playerID][i] == card) {
+      count++;
+    }
+  }
+
+  return count;
+
+}
+
 void discardSpecificCard(struct gameState *state, int currentPlayer, int discard) {
 
   int i;
@@ -1034,7 +1048,7 @@ int baronEffect(struct gameState *state, int currentPlayer, int choice1) {
   if (choice1) {
 
     int p = 0;                  
-    int card_not_discarded = 0; // Bug 1 This is causing unittest1 to have a ~40% coverage (88% wehn set to 1)
+    int card_not_discarded = 1; // Bug 1 (corrected for assignment 4 to reach 100%)
 
     // loop until discard flag is cleared
     while (card_not_discarded) {
@@ -1049,14 +1063,14 @@ int baronEffect(struct gameState *state, int currentPlayer, int choice1) {
         state->discard[currentPlayer][state->discardCount[currentPlayer]] = state->hand[currentPlayer][p];
         state->discardCount[currentPlayer]++;
         
-        for (; p < state->handCount[currentPlayer]; p++) {
+        for (p=0; p < state->handCount[currentPlayer]; p++) { // bug corrected to improve coverage
           state->hand[currentPlayer][p] = state->hand[currentPlayer][p + 1];
         }
         
         state->hand[currentPlayer][state->handCount[currentPlayer]] = -1;
         state->handCount[currentPlayer]--;
 
-        card_not_discarded = 1; //Exit the loop // bug 2
+        card_not_discarded = 0; //Exit the loop // bug 2 (corrected for assignment 4 to reach 100%)
       }
       
       // player hand count exceeded
