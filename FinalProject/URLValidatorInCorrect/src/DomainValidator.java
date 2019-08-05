@@ -66,7 +66,7 @@ public class DomainValidator implements Serializable {
 
     private static final String[] EMPTY_STRING_ARRAY = new String[0];
 
-    private static final long serialVersionUID = -4407125112880174009L;
+    private static final long serialVersionUID = -4407125112880174009 L;
 
     // Regular expression strings for hostnames (derived from RFC2396 and RFC 1123)
 
@@ -84,7 +84,7 @@ public class DomainValidator implements Serializable {
     // If the match fails, input is checked against DOMAIN_LABEL_REGEX (hostnameRegex)
     // RFC1123 sec 2.1 allows hostnames to start with a digit
     private static final String DOMAIN_NAME_REGEX =
-            "^(?:" + DOMAIN_LABEL_REGEX + "\\.)+" + "(" + TOP_LABEL_REGEX + ")\\.?$";
+        "^(?:" + DOMAIN_LABEL_REGEX + "\\.)+" + "(" + TOP_LABEL_REGEX + ")\\.?$";
 
     private final boolean allowLocal;
 
@@ -104,13 +104,13 @@ public class DomainValidator implements Serializable {
      * RegexValidator for matching domains.
      */
     private final RegexValidator domainRegex =
-            new RegexValidator(DOMAIN_NAME_REGEX);
+        new RegexValidator(DOMAIN_NAME_REGEX);
     /**
      * RegexValidator for matching a local hostname
      */
     // RFC1123 sec 2.1 allows hostnames to start with a digit
     private final RegexValidator hostnameRegex =
-            new RegexValidator(DOMAIN_LABEL_REGEX);
+        new RegexValidator(DOMAIN_LABEL_REGEX);
 
     /**
      * Returns the singleton instance of this validator. It
@@ -130,7 +130,7 @@ public class DomainValidator implements Serializable {
      */
     public static synchronized DomainValidator getInstance(boolean allowLocal) {
         inUse = true;
-        if(allowLocal) {
+        if (allowLocal) {
             return DOMAIN_VALIDATOR_WITH_LOCAL;
         }
         return DOMAIN_VALIDATOR;
@@ -182,8 +182,8 @@ public class DomainValidator implements Serializable {
             return false;
         }
         String[] groups = domainRegex.match(domain);
-        return (groups != null && groups.length > 0)
-                || hostnameRegex.isValid(domain);
+        return (groups != null && groups.length > 0) ||
+            hostnameRegex.isValid(domain);
     }
 
     /**
@@ -195,12 +195,12 @@ public class DomainValidator implements Serializable {
      */
     public boolean isValidTld(String tld) {
         tld = unicodeToASCII(tld);
-        if(allowLocal && isValidLocalTld(tld)) {
+        if (allowLocal && isValidLocalTld(tld)) {
             return true;
         }
-        return isValidInfrastructureTld(tld)
-                || isValidGenericTld(tld)
-                || isValidCountryCodeTld(tld);
+        return isValidInfrastructureTld(tld) ||
+            isValidGenericTld(tld) ||
+            isValidCountryCodeTld(tld);
     }
 
     /**
@@ -224,8 +224,8 @@ public class DomainValidator implements Serializable {
      */
     public boolean isValidGenericTld(String gTld) {
         final String key = chompLeadingDot(unicodeToASCII(gTld).toLowerCase(Locale.ENGLISH));
-        return (arrayContains(GENERIC_TLDS, key) || arrayContains(genericTLDsPlus, key))
-                && !arrayContains(genericTLDsMinus, key);
+        return (arrayContains(GENERIC_TLDS, key) || arrayContains(genericTLDsPlus, key)) &&
+            !arrayContains(genericTLDsMinus, key);
     }
 
     /**
@@ -237,8 +237,8 @@ public class DomainValidator implements Serializable {
      */
     public boolean isValidCountryCodeTld(String ccTld) {
         final String key = chompLeadingDot(unicodeToASCII(ccTld).toLowerCase(Locale.ENGLISH));
-        return (arrayContains(COUNTRY_CODE_TLDS, key) || arrayContains(countryCodeTLDsPlus, key))
-                && !arrayContains(countryCodeTLDsMinus, key);
+        return (arrayContains(COUNTRY_CODE_TLDS, key) || arrayContains(countryCodeTLDsPlus, key)) &&
+            !arrayContains(countryCodeTLDsMinus, key);
     }
 
     /**
@@ -277,7 +277,7 @@ public class DomainValidator implements Serializable {
 
     // WARNING: this array MUST be sorted, otherwise it cannot be searched reliably using binary search
     private static final String[] INFRASTRUCTURE_TLDS = new String[] {
-        "arpa",               // internet infrastructure
+        "arpa", // internet infrastructure
     };
 
     // WARNING: this array MUST be sorted, otherwise it cannot be searched reliably using binary search
@@ -585,7 +585,7 @@ public class DomainValidator implements Serializable {
         "dog", // dog Koko Mill, LLC
         "doha", // doha Communications Regulatory Authority (CRA)
         "domains", // domains Sugar Cross, LLC
-//            "doosan", // doosan Doosan Corporation (retired)
+        //            "doosan", // doosan Doosan Corporation (retired)
         "dot", // dot Dish DBS Corporation
         "download", // download dot Support Limited
         "drive", // drive Charleston Road Registry Inc.
@@ -661,7 +661,7 @@ public class DomainValidator implements Serializable {
         "flir", // flir FLIR Systems, Inc.
         "florist", // florist Half Cypress, LLC
         "flowers", // flowers Uniregistry, Corp.
-//        "flsmidth", // flsmidth FLSmidth A/S retired 2016-07-22
+        //        "flsmidth", // flsmidth FLSmidth A/S retired 2016-07-22
         "fly", // fly Charleston Road Registry Inc.
         "foo", // foo Charleston Road Registry Inc.
         "food", // food Lifestyle Domain Holdings, Inc.
@@ -787,7 +787,7 @@ public class DomainValidator implements Serializable {
         "icu", // icu One.com A/S
         "ieee", // ieee IEEE Global LLC
         "ifm", // ifm ifm electronic gmbh
-//        "iinet", // iinet Connect West Pty. Ltd. (Retired)
+        //        "iinet", // iinet Connect West Pty. Ltd. (Retired)
         "ikano", // ikano Ikano S.A.
         "imamat", // imamat Fondation Aga Khan (Aga Khan Foundation)
         "imdb", // imdb Amazon Registry Services, Inc.
@@ -981,7 +981,7 @@ public class DomainValidator implements Serializable {
         "mtr", // mtr MTR Corporation Limited
         "museum", // museum Museum Domain Management Association
         "mutual", // mutual Northwestern Mutual MU TLD Registry, LLC
-//        "mutuelle", // mutuelle Fédération Nationale de la Mutualité Française (Retired)
+        //        "mutuelle", // mutuelle Fédération Nationale de la Mutualité Française (Retired)
         "nab", // nab National Australia Bank Limited
         "nadex", // nadex Nadex Domains, Inc
         "nagoya", // nagoya GMO Registry, Inc.
@@ -1521,254 +1521,254 @@ public class DomainValidator implements Serializable {
         "zippo", // zippo Zadco Company
         "zone", // zone Outer Falls, LLC
         "zuerich", // zuerich Kanton Zürich (Canton of Zurich)
-};
+    };
 
     // WARNING: this array MUST be sorted, otherwise it cannot be searched reliably using binary search
     private static final String[] COUNTRY_CODE_TLDS = new String[] {
-        "ac",                 // Ascension Island
-        "ad",                 // Andorra
-        "ae",                 // United Arab Emirates
-        "af",                 // Afghanistan
-        "ag",                 // Antigua and Barbuda
-        "ai",                 // Anguilla
-        "al",                 // Albania
-        "am",                 // Armenia
-//        "an",                 // Netherlands Antilles (retired)
-        "ao",                 // Angola
-        "aq",                 // Antarctica
-        "ar",                 // Argentina
-        "as",                 // American Samoa
-        "at",                 // Austria
-        "au",                 // Australia (includes Ashmore and Cartier Islands and Coral Sea Islands)
-        "aw",                 // Aruba
-        "ax",                 // Åland
-        "az",                 // Azerbaijan
-        "ba",                 // Bosnia and Herzegovina
-        "bb",                 // Barbados
-        "bd",                 // Bangladesh
-        "be",                 // Belgium
-        "bf",                 // Burkina Faso
-        "bg",                 // Bulgaria
-        "bh",                 // Bahrain
-        "bi",                 // Burundi
-        "bj",                 // Benin
-        "bm",                 // Bermuda
-        "bn",                 // Brunei Darussalam
-        "bo",                 // Bolivia
-        "br",                 // Brazil
-        "bs",                 // Bahamas
-        "bt",                 // Bhutan
-        "bv",                 // Bouvet Island
-        "bw",                 // Botswana
-        "by",                 // Belarus
-        "bz",                 // Belize
-        "ca",                 // Canada
-        "cc",                 // Cocos (Keeling) Islands
-        "cd",                 // Democratic Republic of the Congo (formerly Zaire)
-        "cf",                 // Central African Republic
-        "cg",                 // Republic of the Congo
-        "ch",                 // Switzerland
-        "ci",                 // Côte d'Ivoire
-        "ck",                 // Cook Islands
-        "cl",                 // Chile
-        "cm",                 // Cameroon
-        "cn",                 // China, mainland
-        "co",                 // Colombia
-        "cr",                 // Costa Rica
-        "cu",                 // Cuba
-        "cv",                 // Cape Verde
-        "cw",                 // Curaçao
-        "cx",                 // Christmas Island
-        "cy",                 // Cyprus
-        "cz",                 // Czech Republic
-        "de",                 // Germany
-        "dj",                 // Djibouti
-        "dk",                 // Denmark
-        "dm",                 // Dominica
-        "do",                 // Dominican Republic
-        "dz",                 // Algeria
-        "ec",                 // Ecuador
-        "ee",                 // Estonia
-        "eg",                 // Egypt
-        "er",                 // Eritrea
-        "es",                 // Spain
-        "et",                 // Ethiopia
-        "eu",                 // European Union
-        "fi",                 // Finland
-        "fj",                 // Fiji
-        "fk",                 // Falkland Islands
-        "fm",                 // Federated States of Micronesia
-        "fo",                 // Faroe Islands
-        "fr",                 // France
-        "ga",                 // Gabon
-        "gb",                 // Great Britain (United Kingdom)
-        "gd",                 // Grenada
-        "ge",                 // Georgia
-        "gf",                 // French Guiana
-        "gg",                 // Guernsey
-        "gh",                 // Ghana
-        "gi",                 // Gibraltar
-        "gl",                 // Greenland
-        "gm",                 // The Gambia
-        "gn",                 // Guinea
-        "gp",                 // Guadeloupe
-        "gq",                 // Equatorial Guinea
-        "gr",                 // Greece
-        "gs",                 // South Georgia and the South Sandwich Islands
-        "gt",                 // Guatemala
-        "gu",                 // Guam
-        "gw",                 // Guinea-Bissau
-        "gy",                 // Guyana
-        "hk",                 // Hong Kong
-        "hm",                 // Heard Island and McDonald Islands
-        "hn",                 // Honduras
-        "hr",                 // Croatia (Hrvatska)
-        "ht",                 // Haiti
-        "hu",                 // Hungary
-        "id",                 // Indonesia
-        "ie",                 // Ireland (Éire)
-        "il",                 // Israel
-        "im",                 // Isle of Man
-        "in",                 // India
-        "io",                 // British Indian Ocean Territory
-        "iq",                 // Iraq
-        "ir",                 // Iran
-        "is",                 // Iceland
-        "it",                 // Italy
-        "je",                 // Jersey
-        "jm",                 // Jamaica
-        "jo",                 // Jordan
-        "jp",                 // Japan
-        "ke",                 // Kenya
-        "kg",                 // Kyrgyzstan
-        "kh",                 // Cambodia (Khmer)
-        "ki",                 // Kiribati
-        "km",                 // Comoros
-        "kn",                 // Saint Kitts and Nevis
-        "kp",                 // North Korea
-        "kr",                 // South Korea
-        "kw",                 // Kuwait
-        "ky",                 // Cayman Islands
-        "kz",                 // Kazakhstan
-        "la",                 // Laos (currently being marketed as the official domain for Los Angeles)
-        "lb",                 // Lebanon
-        "lc",                 // Saint Lucia
-        "li",                 // Liechtenstein
-        "lk",                 // Sri Lanka
-        "lr",                 // Liberia
-        "ls",                 // Lesotho
-        "lt",                 // Lithuania
-        "lu",                 // Luxembourg
-        "lv",                 // Latvia
-        "ly",                 // Libya
-        "ma",                 // Morocco
-        "mc",                 // Monaco
-        "md",                 // Moldova
-        "me",                 // Montenegro
-        "mg",                 // Madagascar
-        "mh",                 // Marshall Islands
-        "mk",                 // Republic of Macedonia
-        "ml",                 // Mali
-        "mm",                 // Myanmar
-        "mn",                 // Mongolia
-        "mo",                 // Macau
-        "mp",                 // Northern Mariana Islands
-        "mq",                 // Martinique
-        "mr",                 // Mauritania
-        "ms",                 // Montserrat
-        "mt",                 // Malta
-        "mu",                 // Mauritius
-        "mv",                 // Maldives
-        "mw",                 // Malawi
-        "mx",                 // Mexico
-        "my",                 // Malaysia
-        "mz",                 // Mozambique
-        "na",                 // Namibia
-        "nc",                 // New Caledonia
-        "ne",                 // Niger
-        "nf",                 // Norfolk Island
-        "ng",                 // Nigeria
-        "ni",                 // Nicaragua
-        "nl",                 // Netherlands
-        "no",                 // Norway
-        "np",                 // Nepal
-        "nr",                 // Nauru
-        "nu",                 // Niue
-        "nz",                 // New Zealand
-        "om",                 // Oman
-        "pa",                 // Panama
-        "pe",                 // Peru
-        "pf",                 // French Polynesia With Clipperton Island
-        "pg",                 // Papua New Guinea
-        "ph",                 // Philippines
-        "pk",                 // Pakistan
-        "pl",                 // Poland
-        "pm",                 // Saint-Pierre and Miquelon
-        "pn",                 // Pitcairn Islands
-        "pr",                 // Puerto Rico
-        "ps",                 // Palestinian territories (PA-controlled West Bank and Gaza Strip)
-        "pt",                 // Portugal
-        "pw",                 // Palau
-        "py",                 // Paraguay
-        "qa",                 // Qatar
-        "re",                 // Réunion
-        "ro",                 // Romania
-        "rs",                 // Serbia
-        "ru",                 // Russia
-        "rw",                 // Rwanda
-        "sa",                 // Saudi Arabia
-        "sb",                 // Solomon Islands
-        "sc",                 // Seychelles
-        "sd",                 // Sudan
-        "se",                 // Sweden
-        "sg",                 // Singapore
-        "sh",                 // Saint Helena
-        "si",                 // Slovenia
-        "sj",                 // Svalbard and Jan Mayen Islands Not in use (Norwegian dependencies; see .no)
-        "sk",                 // Slovakia
-        "sl",                 // Sierra Leone
-        "sm",                 // San Marino
-        "sn",                 // Senegal
-        "so",                 // Somalia
-        "sr",                 // Suriname
-        "st",                 // São Tomé and Príncipe
-        "su",                 // Soviet Union (deprecated)
-        "sv",                 // El Salvador
-        "sx",                 // Sint Maarten
-        "sy",                 // Syria
-        "sz",                 // Swaziland
-        "tc",                 // Turks and Caicos Islands
-        "td",                 // Chad
-        "tf",                 // French Southern and Antarctic Lands
-        "tg",                 // Togo
-        "th",                 // Thailand
-        "tj",                 // Tajikistan
-        "tk",                 // Tokelau
-        "tl",                 // East Timor (deprecated old code)
-        "tm",                 // Turkmenistan
-        "tn",                 // Tunisia
-        "to",                 // Tonga
-//        "tp",                 // East Timor (Retired)
-        "tr",                 // Turkey
-        "tt",                 // Trinidad and Tobago
-        "tv",                 // Tuvalu
-        "tw",                 // Taiwan, Republic of China
-        "tz",                 // Tanzania
-        "ua",                 // Ukraine
-        "ug",                 // Uganda
-        "uk",                 // United Kingdom
-        "us",                 // United States of America
-        "uy",                 // Uruguay
-        "uz",                 // Uzbekistan
-        "va",                 // Vatican City State
-        "vc",                 // Saint Vincent and the Grenadines
-        "ve",                 // Venezuela
-        "vg",                 // British Virgin Islands
-        "vi",                 // U.S. Virgin Islands
-        "vn",                 // Vietnam
-        "vu",                 // Vanuatu
-        "wf",                 // Wallis and Futuna
-        "ws",                 // Samoa (formerly Western Samoa)
+        "ac", // Ascension Island
+        "ad", // Andorra
+        "ae", // United Arab Emirates
+        "af", // Afghanistan
+        "ag", // Antigua and Barbuda
+        "ai", // Anguilla
+        "al", // Albania
+        "am", // Armenia
+        //        "an",                 // Netherlands Antilles (retired)
+        "ao", // Angola
+        "aq", // Antarctica
+        "ar", // Argentina
+        "as", // American Samoa
+        "at", // Austria
+        "au", // Australia (includes Ashmore and Cartier Islands and Coral Sea Islands)
+        "aw", // Aruba
+        "ax", // Åland
+        "az", // Azerbaijan
+        "ba", // Bosnia and Herzegovina
+        "bb", // Barbados
+        "bd", // Bangladesh
+        "be", // Belgium
+        "bf", // Burkina Faso
+        "bg", // Bulgaria
+        "bh", // Bahrain
+        "bi", // Burundi
+        "bj", // Benin
+        "bm", // Bermuda
+        "bn", // Brunei Darussalam
+        "bo", // Bolivia
+        "br", // Brazil
+        "bs", // Bahamas
+        "bt", // Bhutan
+        "bv", // Bouvet Island
+        "bw", // Botswana
+        "by", // Belarus
+        "bz", // Belize
+        "ca", // Canada
+        "cc", // Cocos (Keeling) Islands
+        "cd", // Democratic Republic of the Congo (formerly Zaire)
+        "cf", // Central African Republic
+        "cg", // Republic of the Congo
+        "ch", // Switzerland
+        "ci", // Côte d'Ivoire
+        "ck", // Cook Islands
+        "cl", // Chile
+        "cm", // Cameroon
+        "cn", // China, mainland
+        "co", // Colombia
+        "cr", // Costa Rica
+        "cu", // Cuba
+        "cv", // Cape Verde
+        "cw", // Curaçao
+        "cx", // Christmas Island
+        "cy", // Cyprus
+        "cz", // Czech Republic
+        "de", // Germany
+        "dj", // Djibouti
+        "dk", // Denmark
+        "dm", // Dominica
+        "do", // Dominican Republic
+        "dz", // Algeria
+        "ec", // Ecuador
+        "ee", // Estonia
+        "eg", // Egypt
+        "er", // Eritrea
+        "es", // Spain
+        "et", // Ethiopia
+        "eu", // European Union
+        "fi", // Finland
+        "fj", // Fiji
+        "fk", // Falkland Islands
+        "fm", // Federated States of Micronesia
+        "fo", // Faroe Islands
+        "fr", // France
+        "ga", // Gabon
+        "gb", // Great Britain (United Kingdom)
+        "gd", // Grenada
+        "ge", // Georgia
+        "gf", // French Guiana
+        "gg", // Guernsey
+        "gh", // Ghana
+        "gi", // Gibraltar
+        "gl", // Greenland
+        "gm", // The Gambia
+        "gn", // Guinea
+        "gp", // Guadeloupe
+        "gq", // Equatorial Guinea
+        "gr", // Greece
+        "gs", // South Georgia and the South Sandwich Islands
+        "gt", // Guatemala
+        "gu", // Guam
+        "gw", // Guinea-Bissau
+        "gy", // Guyana
+        "hk", // Hong Kong
+        "hm", // Heard Island and McDonald Islands
+        "hn", // Honduras
+        "hr", // Croatia (Hrvatska)
+        "ht", // Haiti
+        "hu", // Hungary
+        "id", // Indonesia
+        "ie", // Ireland (Éire)
+        "il", // Israel
+        "im", // Isle of Man
+        "in", // India
+        "io", // British Indian Ocean Territory
+        "iq", // Iraq
+        "ir", // Iran
+        "is", // Iceland
+        "it", // Italy
+        "je", // Jersey
+        "jm", // Jamaica
+        "jo", // Jordan
+        "jp", // Japan
+        "ke", // Kenya
+        "kg", // Kyrgyzstan
+        "kh", // Cambodia (Khmer)
+        "ki", // Kiribati
+        "km", // Comoros
+        "kn", // Saint Kitts and Nevis
+        "kp", // North Korea
+        "kr", // South Korea
+        "kw", // Kuwait
+        "ky", // Cayman Islands
+        "kz", // Kazakhstan
+        "la", // Laos (currently being marketed as the official domain for Los Angeles)
+        "lb", // Lebanon
+        "lc", // Saint Lucia
+        "li", // Liechtenstein
+        "lk", // Sri Lanka
+        "lr", // Liberia
+        "ls", // Lesotho
+        "lt", // Lithuania
+        "lu", // Luxembourg
+        "lv", // Latvia
+        "ly", // Libya
+        "ma", // Morocco
+        "mc", // Monaco
+        "md", // Moldova
+        "me", // Montenegro
+        "mg", // Madagascar
+        "mh", // Marshall Islands
+        "mk", // Republic of Macedonia
+        "ml", // Mali
+        "mm", // Myanmar
+        "mn", // Mongolia
+        "mo", // Macau
+        "mp", // Northern Mariana Islands
+        "mq", // Martinique
+        "mr", // Mauritania
+        "ms", // Montserrat
+        "mt", // Malta
+        "mu", // Mauritius
+        "mv", // Maldives
+        "mw", // Malawi
+        "mx", // Mexico
+        "my", // Malaysia
+        "mz", // Mozambique
+        "na", // Namibia
+        "nc", // New Caledonia
+        "ne", // Niger
+        "nf", // Norfolk Island
+        "ng", // Nigeria
+        "ni", // Nicaragua
+        "nl", // Netherlands
+        "no", // Norway
+        "np", // Nepal
+        "nr", // Nauru
+        "nu", // Niue
+        "nz", // New Zealand
+        "om", // Oman
+        "pa", // Panama
+        "pe", // Peru
+        "pf", // French Polynesia With Clipperton Island
+        "pg", // Papua New Guinea
+        "ph", // Philippines
+        "pk", // Pakistan
+        "pl", // Poland
+        "pm", // Saint-Pierre and Miquelon
+        "pn", // Pitcairn Islands
+        "pr", // Puerto Rico
+        "ps", // Palestinian territories (PA-controlled West Bank and Gaza Strip)
+        "pt", // Portugal
+        "pw", // Palau
+        "py", // Paraguay
+        "qa", // Qatar
+        "re", // Réunion
+        "ro", // Romania
+        "rs", // Serbia
+        "ru", // Russia
+        "rw", // Rwanda
+        "sa", // Saudi Arabia
+        "sb", // Solomon Islands
+        "sc", // Seychelles
+        "sd", // Sudan
+        "se", // Sweden
+        "sg", // Singapore
+        "sh", // Saint Helena
+        "si", // Slovenia
+        "sj", // Svalbard and Jan Mayen Islands Not in use (Norwegian dependencies; see .no)
+        "sk", // Slovakia
+        "sl", // Sierra Leone
+        "sm", // San Marino
+        "sn", // Senegal
+        "so", // Somalia
+        "sr", // Suriname
+        "st", // São Tomé and Príncipe
+        "su", // Soviet Union (deprecated)
+        "sv", // El Salvador
+        "sx", // Sint Maarten
+        "sy", // Syria
+        "sz", // Swaziland
+        "tc", // Turks and Caicos Islands
+        "td", // Chad
+        "tf", // French Southern and Antarctic Lands
+        "tg", // Togo
+        "th", // Thailand
+        "tj", // Tajikistan
+        "tk", // Tokelau
+        "tl", // East Timor (deprecated old code)
+        "tm", // Turkmenistan
+        "tn", // Tunisia
+        "to", // Tonga
+        //        "tp",                 // East Timor (Retired)
+        "tr", // Turkey
+        "tt", // Trinidad and Tobago
+        "tv", // Tuvalu
+        "tw", // Taiwan, Republic of China
+        "tz", // Tanzania
+        "ua", // Ukraine
+        "ug", // Uganda
+        "uk", // United Kingdom
+        "us", // United States of America
+        "uy", // Uruguay
+        "uz", // Uzbekistan
+        "va", // Vatican City State
+        "vc", // Saint Vincent and the Grenadines
+        "ve", // Venezuela
+        "vg", // British Virgin Islands
+        "vi", // U.S. Virgin Islands
+        "vn", // Vietnam
+        "vu", // Vanuatu
+        "wf", // Wallis and Futuna
+        "ws", // Samoa (formerly Western Samoa)
         "xn--3e0b707e", // 한국 KISA (Korea Internet &amp; Security Agency)
         "xn--45brj9c", // ভারত National Internet Exchange of India
         "xn--54b7fta0cc", // বাংলা Posts and Telecommunications Division
@@ -1815,17 +1815,17 @@ public class DomainValidator implements Serializable {
         "xn--y9a3aq", // ??? Internet Society
         "xn--yfro4i67o", // 新加坡 Singapore Network Information Centre (SGNIC) Pte Ltd
         "xn--ygbi2ammx", // فلسطين Ministry of Telecom &amp; Information Technology (MTIT)
-        "ye",                 // Yemen
-        "yt",                 // Mayotte
-        "za",                 // South Africa
-        "zm",                 // Zambia
-        "zw",                 // Zimbabwe
+        "ye", // Yemen
+        "yt", // Mayotte
+        "za", // South Africa
+        "zm", // Zambia
+        "zw", // Zimbabwe
     };
 
     // WARNING: this array MUST be sorted, otherwise it cannot be searched reliably using binary search
     private static final String[] LOCAL_TLDS = new String[] {
-       "localdomain",         // Also widely used as localhost.localdomain
-       "localhost",           // RFC2606 defined
+        "localdomain", // Also widely used as localhost.localdomain
+        "localhost", // RFC2606 defined
     };
 
     // Additional arrays to supplement or override the built in ones.
@@ -1878,8 +1878,7 @@ public class DomainValidator implements Serializable {
         /** Get a copy of the infrastructure table */
         INFRASTRUCTURE_RO,
         /** Get a copy of the local table */
-        LOCAL_RO
-        ;
+        LOCAL_RO;
     };
 
     // For use by unit test code only
@@ -1913,36 +1912,36 @@ public class DomainValidator implements Serializable {
      * @throws IllegalArgumentException if one of the read-only tables is requested
      * @since 1.5.0
      */
-    public static synchronized void updateTLDOverride(ArrayType table, String [] tlds) {
+    public static synchronized void updateTLDOverride(ArrayType table, String[] tlds) {
         if (inUse) {
             throw new IllegalStateException("Can only invoke this method before calling getInstance");
         }
-        String [] copy = new String[tlds.length];
+        String[] copy = new String[tlds.length];
         // Comparisons are always done with lower-case entries
         for (int i = 0; i < tlds.length; i++) {
             copy[i] = tlds[i].toLowerCase(Locale.ENGLISH);
         }
         Arrays.sort(copy);
-        switch(table) {
-        case COUNTRY_CODE_MINUS:
-            countryCodeTLDsMinus = copy;
-            break;
-        case COUNTRY_CODE_PLUS:
-            countryCodeTLDsPlus = copy;
-            break;
-        case GENERIC_MINUS:
-            genericTLDsMinus = copy;
-            break;
-        case GENERIC_PLUS:
-            genericTLDsPlus = copy;
-            break;
-        case COUNTRY_CODE_RO:
-        case GENERIC_RO:
-        case INFRASTRUCTURE_RO:
-        case LOCAL_RO:
-            throw new IllegalArgumentException("Cannot update the table: " + table);
-        default:
-            throw new IllegalArgumentException("Unexpected enum value: " + table);
+        switch (table) {
+            case COUNTRY_CODE_MINUS:
+                countryCodeTLDsMinus = copy;
+                break;
+            case COUNTRY_CODE_PLUS:
+                countryCodeTLDsPlus = copy;
+                break;
+            case GENERIC_MINUS:
+                genericTLDsMinus = copy;
+                break;
+            case GENERIC_PLUS:
+                genericTLDsPlus = copy;
+                break;
+            case COUNTRY_CODE_RO:
+            case GENERIC_RO:
+            case INFRASTRUCTURE_RO:
+            case LOCAL_RO:
+                throw new IllegalArgumentException("Cannot update the table: " + table);
+            default:
+                throw new IllegalArgumentException("Unexpected enum value: " + table);
         }
     }
 
@@ -1953,35 +1952,35 @@ public class DomainValidator implements Serializable {
      * @throws IllegalArgumentException if the table type is unexpected (should not happen)
      * @since 1.5.1
      */
-    public static String [] getTLDEntries(ArrayType table) {
+    public static String[] getTLDEntries(ArrayType table) {
         final String array[];
-        switch(table) {
-        case COUNTRY_CODE_MINUS:
-            array = countryCodeTLDsMinus;
-            break;
-        case COUNTRY_CODE_PLUS:
-            array = countryCodeTLDsPlus;
-            break;
-        case GENERIC_MINUS:
-            array = genericTLDsMinus;
-            break;
-        case GENERIC_PLUS:
-            array = genericTLDsPlus;
-            break;
-        case GENERIC_RO:
-            array = GENERIC_TLDS;
-            break;
-        case COUNTRY_CODE_RO:
-            array = COUNTRY_CODE_TLDS;
-            break;
-        case INFRASTRUCTURE_RO:
-            array = INFRASTRUCTURE_TLDS;
-            break;
-        case LOCAL_RO:
-            array = LOCAL_TLDS;
-            break;
-        default:
-            throw new IllegalArgumentException("Unexpected enum value: " + table);
+        switch (table) {
+            case COUNTRY_CODE_MINUS:
+                array = countryCodeTLDsMinus;
+                break;
+            case COUNTRY_CODE_PLUS:
+                array = countryCodeTLDsPlus;
+                break;
+            case GENERIC_MINUS:
+                array = genericTLDsMinus;
+                break;
+            case GENERIC_PLUS:
+                array = genericTLDsPlus;
+                break;
+            case GENERIC_RO:
+                array = GENERIC_TLDS;
+                break;
+            case COUNTRY_CODE_RO:
+                array = COUNTRY_CODE_TLDS;
+                break;
+            case INFRASTRUCTURE_RO:
+                array = INFRASTRUCTURE_TLDS;
+                break;
+            case LOCAL_RO:
+                array = LOCAL_TLDS;
+                break;
+            default:
+                throw new IllegalArgumentException("Unexpected enum value: " + table);
         }
         return Arrays.copyOf(array, array.length); // clone the array
     }
@@ -2004,7 +2003,7 @@ public class DomainValidator implements Serializable {
                 return ascii;
             }
             final int length = input.length();
-            if (length == 0) {// check there is a last character
+            if (length == 0) { // check there is a last character
                 return input;
             }
             // RFC3490 3.1. 1)
@@ -2012,8 +2011,8 @@ public class DomainValidator implements Serializable {
             //            characters MUST be recognized as dots: U+002E (full stop), U+3002
             //            (ideographic full stop), U+FF0E (fullwidth full stop), U+FF61
             //            (halfwidth ideographic full stop).
-            char lastChar = input.charAt(length-1);// fetch original last char
-            switch(lastChar) {
+            char lastChar = input.charAt(length - 1); // fetch original last char
+            switch (lastChar) {
                 case '\u002E': // "." full stop
                 case '\u3002': // ideographic full stop
                 case '\uFF0E': // fullwidth full stop
@@ -2043,7 +2042,7 @@ public class DomainValidator implements Serializable {
         if (input == null) {
             return true;
         }
-        for(int i=0; i < input.length(); i++) {
+        for (int i = 0; i < input.length(); i++) {
             if (input.charAt(i) > 0x7F) { // CHECKSTYLE IGNORE MagicNumber
                 return false;
             }

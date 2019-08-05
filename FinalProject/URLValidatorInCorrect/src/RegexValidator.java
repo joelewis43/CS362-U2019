@@ -68,7 +68,7 @@ import java.util.regex.Matcher;
  */
 public class RegexValidator implements Serializable {
 
-    private static final long serialVersionUID = -8832409930574867162L;
+    private static final long serialVersionUID = -8832409930574867162 L;
 
     private final Pattern[] patterns;
 
@@ -93,7 +93,9 @@ public class RegexValidator implements Serializable {
      * sensitive</i>, otherwise matching is <i>case in-sensitive</i>
      */
     public RegexValidator(String regex, boolean caseSensitive) {
-        this(new String[] {regex}, caseSensitive);
+        this(new String[] {
+            regex
+        }, caseSensitive);
     }
 
     /**
@@ -121,12 +123,12 @@ public class RegexValidator implements Serializable {
             throw new IllegalArgumentException("Regular expressions are missing");
         }
         patterns = new Pattern[regexs.length];
-        int flags =  (caseSensitive ? 0: Pattern.CASE_INSENSITIVE);
+        int flags = (caseSensitive ? 0 : Pattern.CASE_INSENSITIVE);
         for (int i = 0; i < regexs.length; i++) {
             if (regexs[i] == null || regexs[i].length() == 0) {
                 throw new IllegalArgumentException("Regular expression[" + i + "] is missing");
             }
-            patterns[i] =  Pattern.compile(regexs[i], flags);
+            patterns[i] = Pattern.compile(regexs[i], flags);
         }
     }
 
@@ -167,7 +169,7 @@ public class RegexValidator implements Serializable {
                 int count = matcher.groupCount();
                 String[] groups = new String[count];
                 for (int j = 0; j < count; j++) {
-                    groups[j] = matcher.group(j+1);
+                    groups[j] = matcher.group(j + 1);
                 }
                 return groups;
             }
@@ -197,7 +199,7 @@ public class RegexValidator implements Serializable {
                 }
                 StringBuilder buffer = new StringBuilder();
                 for (int j = 0; j < count; j++) {
-                    String component = matcher.group(j+1);
+                    String component = matcher.group(j + 1);
                     if (component != null) {
                         buffer.append(component);
                     }

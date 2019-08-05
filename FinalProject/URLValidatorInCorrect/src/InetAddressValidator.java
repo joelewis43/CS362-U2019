@@ -41,10 +41,10 @@ public class InetAddressValidator implements Serializable {
 
     private static final int BASE_16 = 16;
 
-    private static final long serialVersionUID = -919201640201914789L;
+    private static final long serialVersionUID = -919201640201914789 L;
 
     private static final String IPV4_REGEX =
-            "^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$";
+        "^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$";
 
     // Max number of hex groups (separated by :) in an IPV6 address
     private static final int IPV6_MAX_HEX_GROUPS = 8;
@@ -91,7 +91,7 @@ public class InetAddressValidator implements Serializable {
         }
 
         // verify that address subgroups are legal
-        for (String ipSegment : groups) {
+        for (String ipSegment: groups) {
             if (ipSegment == null || ipSegment.length() == 0) {
                 return false;
             }
@@ -100,7 +100,7 @@ public class InetAddressValidator implements Serializable {
 
             try {
                 iIpSegment = Integer.parseInt(ipSegment);
-            } catch(NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 return false;
             }
 
@@ -129,13 +129,13 @@ public class InetAddressValidator implements Serializable {
         if (containsCompressedZeroes && (inet6Address.indexOf("::") != inet6Address.lastIndexOf("::"))) {
             return false;
         }
-        if ((inet6Address.startsWith(":") && !inet6Address.startsWith("::"))
-                || (inet6Address.endsWith(":") && !inet6Address.endsWith("::"))) {
+        if ((inet6Address.startsWith(":") && !inet6Address.startsWith("::")) ||
+            (inet6Address.endsWith(":") && !inet6Address.endsWith("::"))) {
             return false;
         }
         String[] octets = inet6Address.split(":");
         if (containsCompressedZeroes) {
-            List<String> octetList = new ArrayList<String>(Arrays.asList(octets));
+            List < String > octetList = new ArrayList < String > (Arrays.asList(octets));
             if (inet6Address.endsWith("::")) {
                 // String.split() drops ending empty segments
                 octetList.add("");

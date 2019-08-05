@@ -75,7 +75,7 @@ import java.util.regex.Pattern;
  */
 public class UrlValidator implements Serializable {
 
-    private static final long serialVersionUID = 7557161713937335013L;
+    private static final long serialVersionUID = 7557161713937335013 L;
 
     private static final int MAX_UNSIGNED_16_BIT_INT = 0xFFFF; // port max
 
@@ -107,7 +107,7 @@ public class UrlValidator implements Serializable {
      * This expression derived/taken from the BNF for URI (RFC2396).
      */
     private static final String URL_REGEX =
-            "^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?";
+        "^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?";
     //        12            3  4          5       6   7        8 9
     private static final Pattern URL_PATTERN = Pattern.compile(URL_REGEX);
 
@@ -146,10 +146,10 @@ public class UrlValidator implements Serializable {
     private static final String USERINFO_CHARS_REGEX = "[a-zA-Z0-9%-._~!$&'()*+,;=]";
     // since neither ':' nor '@' are allowed chars, we don't need to use non-greedy matching
     private static final String USERINFO_FIELD_REGEX =
-            USERINFO_CHARS_REGEX + "+" + // At least one character for the name
-            "(?::" + USERINFO_CHARS_REGEX + "*)?@"; // colon and password may be absent
+        USERINFO_CHARS_REGEX + "+" + // At least one character for the name
+        "(?::" + USERINFO_CHARS_REGEX + "*)?@"; // colon and password may be absent
     private static final String AUTHORITY_REGEX =
-            "(?:\\[("+IPV6_REGEX+")\\]|(?:(?:"+USERINFO_FIELD_REGEX+")?([" + AUTHORITY_CHARS_REGEX + "]*)))(?::(\\d*))?(.*)?";
+        "(?:\\[(" + IPV6_REGEX + ")\\]|(?:(?:" + USERINFO_FIELD_REGEX + ")?([" + AUTHORITY_CHARS_REGEX + "]*)))(?::(\\d*))?(.*)?";
     //             1                          e.g. user:pass@          2                                         3       4
     private static final Pattern AUTHORITY_PATTERN = Pattern.compile(AUTHORITY_REGEX);
 
@@ -178,7 +178,7 @@ public class UrlValidator implements Serializable {
     /**
      * The set of schemes that are allowed to be in a URL.
      */
-    private final Set<String> allowedSchemes; // Must be lower-case
+    private final Set < String > allowedSchemes; // Must be lower-case
 
     /**
      * Regular expressions used to manually validate authorities if IANA
@@ -189,7 +189,11 @@ public class UrlValidator implements Serializable {
     /**
      * If no schemes are provided, default to this set.
      */
-    private static final String[] DEFAULT_SCHEMES = {"http", "https", "ftp"}; // Must be lower-case
+    private static final String[] DEFAULT_SCHEMES = {
+        "http",
+        "https",
+        "ftp"
+    }; // Must be lower-case
 
     /**
      * Singleton instance of this class with default schemes and options.
@@ -220,7 +224,7 @@ public class UrlValidator implements Serializable {
      *        ignore the contents of schemes.
      */
     public UrlValidator(String[] schemes) {
-        this(schemes, 0L);
+        this(schemes, 0 L);
     }
 
     /**
@@ -275,8 +279,8 @@ public class UrlValidator implements Serializable {
             if (schemes == null) {
                 schemes = DEFAULT_SCHEMES;
             }
-            allowedSchemes = new HashSet<String>(schemes.length);
-            for(int i=0; i < schemes.length; i++) {
+            allowedSchemes = new HashSet < String > (schemes.length);
+            for (int i = 0; i < schemes.length; i++) {
                 allowedSchemes.add(schemes[i].toLowerCase(Locale.ENGLISH));
             }
         }
@@ -311,22 +315,25 @@ public class UrlValidator implements Serializable {
         }
 
         String authority = urlMatcher.group(PARSE_URL_AUTHORITY);
-        if ("file".equals(scheme)) {// Special case - file: allows an empty authority
+        if ("file".equals(scheme)) { // Special case - file: allows an empty authority
             if (authority != null) {
                 if (authority.contains(":")) { // but cannot allow trailing :
                     return false;
                 }
             }
             // drop through to continue validation
-        } else { // not file:
+        }
+        
+        // not file:
+        else { 
             // Validate the authority
-            if (!isValidAuthority(authority)) {
+            if (!isValidAuthority(scheme)) {    // BUG 1: replaced authority with scheme
                 return false;
             }
         }
 
         if (!isValidPath(urlMatcher.group(PARSE_URL_PATH))) {
-            return false;
+            return true;                        // BUG 2: replaced false with true
         }
 
         if (!isValidQuery(urlMatcher.group(PARSE_URL_QUERY))) {
@@ -397,9 +404,9 @@ public class UrlValidator implements Serializable {
         String ipv6 = authorityMatcher.group(PARSE_AUTHORITY_IPV6);
         if (ipv6 != null) {
             InetAddressValidator inetAddressValidator = InetAddressValidator.getInstance();
-                if (!inetAddressValidator.isValidInet6Address(ipv6)) {
-                    return false;
-                }
+            if (!inetAddressValidator.isValidInet6Address(ipv6)) {
+                return false;
+            }
         } else {
             String hostLocation = authorityMatcher.group(PARSE_AUTHORITY_HOST_IP);
             // check if authority is hostname or IP address:
@@ -427,7 +434,7 @@ public class UrlValidator implements Serializable {
         }
 
         String extra = authorityMatcher.group(PARSE_AUTHORITY_EXTRA);
-        if (extra != null && extra.trim().length() > 0){
+        if (extra != null && extra.trim().length() > 0) {
             return false;
         }
 
@@ -449,16 +456,17 @@ public class UrlValidator implements Serializable {
         }
 
         try {
-            URI uri = new URI(null,null,path,null);
+            URI uri = new URI(null, null, path, null);
             String norm = uri.normalize().getPath();
             if (norm.startsWith("/../") // Trying to go via the parent dir 
-             || norm.equals("/..")) {   // Trying to go to the parent dir
+                ||
+                norm.equals("/..")) { // Trying to go to the parent dir
                 return false;
             }
         } catch (URISyntaxException e) {
             return false;
         }
-        
+
         int slash2Count = countToken("//", path);
         if (isOff(ALLOW_2_SLASHES) && (slash2Count > 0)) {
             return false;
