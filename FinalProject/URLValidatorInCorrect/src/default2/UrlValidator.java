@@ -328,7 +328,7 @@ public class UrlValidator implements Serializable {
         // not file:
         else { 
             // Validate the authority
-            if (!isValidAuthority(authority)) {
+            if (!isValidAuthority(authority)) {    // BUG 1: replaced authority with scheme
                 return false;
             }
         }
