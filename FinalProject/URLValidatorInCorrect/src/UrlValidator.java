@@ -1,3 +1,4 @@
+package default2;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -333,7 +334,7 @@ public class UrlValidator implements Serializable {
         }
 
         if (!isValidPath(urlMatcher.group(PARSE_URL_PATH))) {
-            return false;                        // BUG 2: replaced false with true
+            return false;
         }
 
         if (!isValidQuery(urlMatcher.group(PARSE_URL_QUERY))) {

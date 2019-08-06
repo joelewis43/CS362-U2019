@@ -8,6 +8,8 @@ import UrlValidatorUnitTest.ResultPair;
 
 import java.util.Random;
 
+import static org.junit.Assert.assertEquals;
+
 
 
 
@@ -45,7 +47,15 @@ public class UrlValidatorIsValid extends TestCase {
             boolean actual = urlVal.isValid(url);
 
             // check the values
-            assertEquals(expectation == actual, "Reality is often dissapointing.");
+            try {
+            	assertEquals(expectation, actual);
+            } catch (AssertionError e) {
+            	System.out.println("\n\n");
+            	System.out.println("Bad URL: " + url);
+            	System.out.println("Expected: " + expectation);
+            	System.out.println("Actual: " + actual);
+            	System.out.println("\n\n");
+            }
     		
     	}
     }
@@ -55,34 +65,62 @@ public class UrlValidatorIsValid extends TestCase {
 
         Random rand = new Random();
         
-        int falseID = rand.nextInt(5);
+        int falseID = rand.nextInt(6);
         
         ResultPair rp;
         
         
         if (falseID == 0) {
-        	//System.out.println("The scheme is false");
+        	System.out.println("The scheme is false");
         	rp = falseScheme();
         }
         else if (falseID == 1) {
-        	//System.out.println("The authority is false");
+        	System.out.println("The authority is false");
         	rp = falseAuthority();
         }
         else if (falseID == 2) {
-        	//System.out.println("The port is false");
+        	System.out.println("The port is false");
         	rp = falsePort();
         }
         else if (falseID == 3) {
-        	//System.out.println("The path is false");
+        	System.out.println("The path is false");
         	rp = falsePath();
         }
-        else {
-        	//System.out.println("The query is false");
+        else if (falseID == 4){
+        	System.out.println("The query is false");
         	rp = falseQuery();
+        }
+        else {
+        	rp = trueUrl();
         }
         
         
         return rp;
+    }
+    
+    
+    public ResultPair trueUrl() {
+    	
+    	Random rand = new Random();
+    	String url = "";
+    	
+    	int scheme = rand.nextInt(testScheme.length);
+    	int authority = rand.nextInt(testAuthority.length);
+    	int port = rand.nextInt(testPort.length);
+    	int path = rand.nextInt(testPath.length);
+    	int query = rand.nextInt(testQuery.length);
+    	
+    	url += testScheme[scheme].item;
+    	url += testAuthority[authority].item;
+    	url += testPort[port].item;
+    	url += testPath[path].item;
+    	url += testQuery[query].item;
+    			
+    	ResultPair rp = new ResultPair(url, true);
+    	
+    	return rp;
+    	
+    	
     }
 
     
@@ -97,11 +135,11 @@ public class UrlValidatorIsValid extends TestCase {
     	int path = rand.nextInt(testPath.length);
     	int query = rand.nextInt(testQuery.length);
     	
-    	url += testSchemeFalse[scheme];
-    	url += testAuthority[authority];
-    	url += testPort[port];
-    	url += testPath[path];
-    	url += testQuery[query];
+    	url += testSchemeFalse[scheme].item;
+    	url += testAuthority[authority].item;
+    	url += testPort[port].item;
+    	url += testPath[path].item;
+    	url += testQuery[query].item;
     			
     	ResultPair rp = new ResultPair(url, false);
     	
@@ -121,11 +159,11 @@ public class UrlValidatorIsValid extends TestCase {
     	int path = rand.nextInt(testPath.length);
     	int query = rand.nextInt(testQuery.length);
     	
-    	url += testScheme[scheme];
-    	url += testAuthorityFalse[authority];
-    	url += testPort[port];
-    	url += testPath[path];
-    	url += testQuery[query];
+    	url += testScheme[scheme].item;
+    	url += testAuthorityFalse[authority].item;
+    	url += testPort[port].item;
+    	url += testPath[path].item;
+    	url += testQuery[query].item;
     			
     	ResultPair rp = new ResultPair(url, false);
     	
@@ -145,11 +183,11 @@ public class UrlValidatorIsValid extends TestCase {
     	int path = rand.nextInt(testPath.length);
     	int query = rand.nextInt(testQuery.length);
     	
-    	url += testScheme[scheme];
-    	url += testAuthority[authority];
-    	url += testPortFalse[port];
-    	url += testPath[path];
-    	url += testQuery[query];
+    	url += testScheme[scheme].item;
+    	url += testAuthority[authority].item;
+    	url += testPortFalse[port].item;
+    	url += testPath[path].item;
+    	url += testQuery[query].item;
     			
     	ResultPair rp = new ResultPair(url, false);
     	
@@ -169,11 +207,11 @@ public class UrlValidatorIsValid extends TestCase {
     	int path = rand.nextInt(testPathFalse.length);
     	int query = rand.nextInt(testQuery.length);
     	
-    	url += testScheme[scheme];
-    	url += testAuthority[authority];
-    	url += testPort[port];
-    	url += testPathFalse[path];
-    	url += testQuery[query];
+    	url += testScheme[scheme].item;
+    	url += testAuthority[authority].item;
+    	url += testPort[port].item;
+    	url += testPathFalse[path].item;
+    	url += testQuery[query].item;
     			
     	ResultPair rp = new ResultPair(url, false);
     	
@@ -193,11 +231,11 @@ public class UrlValidatorIsValid extends TestCase {
     	int path = rand.nextInt(testPath.length);
     	int query = rand.nextInt(testQueryFalse.length);
     	
-    	url += testScheme[scheme];
-    	url += testAuthority[authority];
-    	url += testPort[port];
-    	url += testPath[path];
-    	url += testQueryFalse[query];
+    	url += testScheme[scheme].item;
+    	url += testAuthority[authority].item;
+    	url += testPort[port].item;
+    	url += testPath[path].item;
+    	url += testQueryFalse[query].item;
     			
     	ResultPair rp = new ResultPair(url, false);
     	
@@ -209,15 +247,15 @@ public class UrlValidatorIsValid extends TestCase {
     
     
     
-    public void assertEquals(boolean exp, String msg) {
-    
-    	if (exp) {
-    		//System.out.println("Test Passed!");
-    	}
-    	else {
-    		fail(msg);
-    	}    	
-    }
+//    public void assertEquals(boolean exp, String msg) {
+//    
+//    	if (exp) {
+//    		//System.out.println("Test Passed!");
+//    	}
+//    	else {
+//    		fail(msg);
+//    	}    	
+//    }
     
     
     ResultPair[] testScheme = {
