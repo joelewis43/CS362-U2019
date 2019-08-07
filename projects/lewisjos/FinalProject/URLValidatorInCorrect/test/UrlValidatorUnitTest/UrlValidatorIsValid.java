@@ -1,13 +1,9 @@
-package UrlValidatorUnitTest;
+package test.UrlValidatorUnitTest;
 
 import junit.framework.TestCase;
-
-import default2.UrlValidator;
-
-import UrlValidatorUnitTest.ResultPair;
-
+import src.UrlValidator;
+import test.UrlValidatorUnitTest.ResultPair;
 import java.util.Random;
-
 import static org.junit.Assert.assertEquals;
 
 
@@ -29,7 +25,11 @@ public class UrlValidatorIsValid extends TestCase {
     
     public void testIsValid() {
     	
-    	for (int i=0; i<100; i++) {
+    	int fails = 0;
+    	
+    	for (int i=0; i<150; i++) {
+    		
+    		System.out.println("");
     	
     		// allocate a UrlVal object and its options
             long options = UrlValidator.ALLOW_ALL_SCHEMES +
@@ -49,15 +49,18 @@ public class UrlValidatorIsValid extends TestCase {
             // check the values
             try {
             	assertEquals(expectation, actual);
+            	System.out.println("Passed!");
             } catch (AssertionError e) {
-            	System.out.println("\n\n");
             	System.out.println("Bad URL: " + url);
             	System.out.println("Expected: " + expectation);
             	System.out.println("Actual: " + actual);
             	System.out.println("\n\n");
+            	fails++;
             }
     		
     	}
+    	
+    	System.out.println("\nThe total number of failures was: " + fails);
     }
 
     
@@ -71,27 +74,28 @@ public class UrlValidatorIsValid extends TestCase {
         
         
         if (falseID == 0) {
-        	System.out.println("The scheme is false");
         	rp = falseScheme();
+        	System.out.println("Testing false scheme");
         }
         else if (falseID == 1) {
-        	System.out.println("The authority is false");
         	rp = falseAuthority();
+        	System.out.println("Testing false authority");
         }
         else if (falseID == 2) {
-        	System.out.println("The port is false");
         	rp = falsePort();
+        	System.out.println("Testing false port");
         }
         else if (falseID == 3) {
-        	System.out.println("The path is false");
         	rp = falsePath();
+        	System.out.println("Testing false path");
         }
         else if (falseID == 4){
-        	System.out.println("The query is false");
         	rp = falseQuery();
+        	System.out.println("Testing false ID");
         }
         else {
         	rp = trueUrl();
+        	System.out.println("Testing valid URL");
         }
         
         
@@ -333,12 +337,11 @@ public class UrlValidatorIsValid extends TestCase {
     ResultPair[] testPathFalse = {
         new ResultPair("/..", false),
         new ResultPair("/../", false),
-        new ResultPair("/..//file", false),
-        new ResultPair("/test1//file", false)
+        new ResultPair("/..//file", false)
     };
     
     ResultPair[] testQueryFalse = {
-        new ResultPair("XXX!test=wrong", false)
+        new ResultPair("\\S", false)
     };
 
 

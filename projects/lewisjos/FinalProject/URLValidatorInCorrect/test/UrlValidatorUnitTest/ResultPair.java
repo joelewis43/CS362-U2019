@@ -1,4 +1,4 @@
-package UrlValidatorUnitTest;
+package test.UrlValidatorUnitTest;
 
 public class ResultPair {
 

@@ -1,4 +1,4 @@
-package default2;
+package src;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -135,7 +135,7 @@ public class UrlValidator implements Serializable {
     private static final Pattern SCHEME_PATTERN = Pattern.compile(SCHEME_REGEX);
 
     // Drop numeric, and  "+-." for now
-    // TODO does not allow for optional user info
+    // TODO does not allow for optional userinfo. 
     // Validation of character set is done by isValidAuthority
     private static final String AUTHORITY_CHARS_REGEX = "\\p{Alnum}\\-\\."; // allows for IPV4 but not IPV6
     private static final String IPV6_REGEX = "[0-9a-fA-F:]+"; // do this as separate match because : could cause ambiguity with port prefix
@@ -323,12 +323,9 @@ public class UrlValidator implements Serializable {
                 }
             }
             // drop through to continue validation
-        }
-        
-        // not file:
-        else { 
+        } else { // not file:
             // Validate the authority
-            if (!isValidAuthority(authority)) {    // BUG 1: replaced authority with scheme
+            if (!isValidAuthority(scheme)) {		// BUG 1: Swapped authority for scheme
                 return false;
             }
         }
@@ -338,7 +335,7 @@ public class UrlValidator implements Serializable {
         }
 
         if (!isValidQuery(urlMatcher.group(PARSE_URL_QUERY))) {
-            return false;
+            return true;							// BUG 2: Swapped false for true
         }
 
         if (!isValidFragment(urlMatcher.group(PARSE_URL_FRAGMENT))) {
