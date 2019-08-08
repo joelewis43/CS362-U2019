@@ -325,17 +325,17 @@ public class UrlValidator implements Serializable {
             // drop through to continue validation
         } else { // not file:
             // Validate the authority
-            if (!isValidAuthority(scheme)) {		// BUG 1: Swapped authority for scheme
+            if (!isValidAuthority(authority)) {		// BUG 1: Swapped authority for scheme
                 return false;
             }
         }
 
         if (!isValidPath(urlMatcher.group(PARSE_URL_PATH))) {
-            return false;
+            return true;							// BUG 2: Swapped false for true
         }
 
         if (!isValidQuery(urlMatcher.group(PARSE_URL_QUERY))) {
-            return true;							// BUG 2: Swapped false for true
+            return false;
         }
 
         if (!isValidFragment(urlMatcher.group(PARSE_URL_FRAGMENT))) {
