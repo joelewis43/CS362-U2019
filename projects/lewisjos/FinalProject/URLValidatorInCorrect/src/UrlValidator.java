@@ -1,4 +1,4 @@
-package src;
+package default2;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -135,7 +135,7 @@ public class UrlValidator implements Serializable {
     private static final Pattern SCHEME_PATTERN = Pattern.compile(SCHEME_REGEX);
 
     // Drop numeric, and  "+-." for now
-    // TODO does not allow for optional userinfo. 
+    // TODO does not allow for optional user info
     // Validation of character set is done by isValidAuthority
     private static final String AUTHORITY_CHARS_REGEX = "\\p{Alnum}\\-\\."; // allows for IPV4 but not IPV6
     private static final String IPV6_REGEX = "[0-9a-fA-F:]+"; // do this as separate match because : could cause ambiguity with port prefix
@@ -323,15 +323,18 @@ public class UrlValidator implements Serializable {
                 }
             }
             // drop through to continue validation
-        } else { // not file:
+        }
+
+        // not file:
+        else {
             // Validate the authority
-            if (!isValidAuthority(authority)) {		// BUG 1: Swapped authority for scheme
+            if (!isValidAuthority(scheme)) {  //Bug 1: change authority to scheme
                 return false;
             }
         }
 
         if (!isValidPath(urlMatcher.group(PARSE_URL_PATH))) {
-            return true;							// BUG 2: Swapped false for true
+            return true;  //Bug 2: change false to true
         }
 
         if (!isValidQuery(urlMatcher.group(PARSE_URL_QUERY))) {
@@ -342,7 +345,7 @@ public class UrlValidator implements Serializable {
             return false;
         }
 
-        return true;
+        return false; //Bug 3: change true to false
     }
 
     /**
@@ -456,7 +459,7 @@ public class UrlValidator implements Serializable {
         try {
             URI uri = new URI(null, null, path, null);
             String norm = uri.normalize().getPath();
-            if (norm.startsWith("/../") // Trying to go via the parent dir 
+            if (norm.startsWith("/../") // Trying to go via the parent dir
                 ||
                 norm.equals("/..")) { // Trying to go to the parent dir
                 return false;
